@@ -15,7 +15,7 @@ jobs:
           user: ${{ secrets.FLUENTBITIO_USERNAME }}
           key: ${{ secrets.FLUENTBITIO_SSHKEY }}
           command: |
-            git -C fluent-bit-stats pull || git clone git@github.com:niedbalski/fluent-bit-stats.git fluent-bit-stats
+            git -C fluent-bit-stats pull || git clone https://github.com/niedbalski/fluent-bit-stats.git
             cd fluent-bit-stats
             sed -i -e "s/\__GRAFANACLOUD_USERNAME__/${{ env.GRAFANACLOUD_USERNAME }}/g" config/prometheus.yml
             sed -i -e "s/\__GRAFANACLOUD_PASSWORD__/${{ env.GRAFANACLOUD_PASSWORD }}/g" config/prometheus.yml
