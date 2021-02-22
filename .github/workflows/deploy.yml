@@ -19,7 +19,7 @@ jobs:
             cd fluent-bit-stats
             sed -i -e "s/\__GRAFANACLOUD_USERNAME__/${{ env.GRAFANACLOUD_USERNAME }}/g" config/prometheus.yml
             sed -i -e "s/\__GRAFANACLOUD_PASSWORD__/${{ env.GRAFANACLOUD_PASSWORD }}/g" config/prometheus.yml
-            make up
+            sudo make up
         env:
           GRAFANACLOUD_USERNAME: ${{ secrets.GRAFANACLOUD_USERNAME }}
           GRAFANACLOUD_PASSWORD: ${{ secrets.GRAFANACLOUD_PASSWORD }}
