@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - main
+
+name: Deploy stats containers
+jobs:
+  deploy-containers:
+    name: deploy
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.FLUENTBITIO_HOST }}
+          username: ${{ secrets.FLUENTBITIO_USERNAME }}
+          key: ${{ secrets.FLUENTBITIO_SSHKEY }}
+          script: |
+            git -C fluent-bit-stats pull || git clone git@github.com:niedbalski/fluent-bit-stats.git fluent-bit-stats
+            cd fluent-bit-stats
+            sed -i -e "s/\__GRAFANACLOUD_USERNAME__/${{ env.GRAFANACLOUD_USERNAME }}/g" config/prometheus.yml
+            sed -i -e "s/\__GRAFANACLOUD_PASSWORD__/${{ env.GRAFANACLOUD_PASSWORD }}/g" config/prometheus.yml
+            make up
+        env:
+          GRAFANACLOUD_USERNAME: ${{ secrets.GRAFANACLOUD_USERNAME }}
+          GRAFANACLOUD_PASSWORD: ${{ secrets.GRAFANACLOUD_PASSWORD }}
