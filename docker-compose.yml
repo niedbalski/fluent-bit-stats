@@ -15,7 +15,7 @@ services:
     image: quay.io/nginx-log-exporter/nginx-log-exporter-linux-amd64:main
     volumes:
       - /var/log/nginx/apt.fluentbit.io.access.log:/access.log
-    command: /nginx-log-exporter -export_address 0.0.0.0:9180 -access_log_path /access.log -access_log_format CLF -log_polling_period 10s  -monitored_paths '.*.deb','*.rpm' -custom_labels releases=fluent-bit
+    command: /nginx-log-exporter -export_address 0.0.0.0:9180 -access_log_path /access.log -access_log_format CLF -log_polling_period 10s  -monitored_paths '.*.deb','.*.rpm' -custom_labels releases=fluent-bit
     networks:
       - nginx-log-exporter
     ports:
